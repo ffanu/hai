@@ -687,9 +687,9 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase325_empty_stream_fallback",
-        "Realtime Activity Animation Phase 325" in readme
-        and "20261007-phase325" in readme
+        "readme_phase326_empty_stream_fallback",
+        "Realtime Activity Animation Phase 326" in readme
+        and "20261007-phase326" in readme
         and "ghost" in readme
         and "skeleton halus" in readme
         and "mengetik realtime" in readme
@@ -697,9 +697,9 @@ def main() -> int:
         and "dots mobile" in readme,
     )
     add(
-        "report_phase325_empty_stream_fallback",
-        "Phase 325" in report
-        and "20261007-phase325" in report
+        "report_phase326_empty_stream_fallback",
+        "Phase 326" in report
+        and "20261007-phase326" in report
         and "empty-stream-fallback" in report
         and "robot typing" in report
         and "dots mobile" in report
