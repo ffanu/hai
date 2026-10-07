@@ -458,7 +458,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -524,7 +524,7 @@ body.hai-theme-adminlte-classic .hai-image-preview-scan {
     50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* ===== Phase 323 final cascade: calmer ChatGPT-like answer loading ===== */
+/* ===== Phase 324 final cascade: calmer ChatGPT-like answer loading ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing::before,
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing::after,
 body.hai-theme-adminlte-classic .assistant-message-container.is-image-streaming::before,
@@ -753,7 +753,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 20px !important;
     height: 20px !important;
     border-radius: 7px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 15px 15px no-repeat, linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 15px 15px no-repeat, linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
     box-shadow: 0 5px 14px rgba(249, 115, 22, .16) !important;
     animation: haiCalmFloat 2.2s ease-in-out infinite !important;
 }
@@ -988,7 +988,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -18320,7 +18320,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -18386,7 +18386,7 @@ body.hai-theme-adminlte-classic .hai-image-preview-scan {
     50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* ===== Phase 323 true EOF guard: fix robot typing ghost/double-card bug ===== */
+/* ===== Phase 324 true EOF guard: fix robot typing ghost/double-card bug ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-thinking {
     padding-left: 0 !important;
 }
@@ -18591,12 +18591,12 @@ body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-t
     }
 }
 
-/* ===== Phase 323 robot typing dot containment hotfix ===== */
+/* ===== Phase 324 robot typing dot containment hotfix ===== */
 body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-dots {
     display: none !important;
 }
 
-/* ===== Phase 323 QA-compatible hidden text stream badge ===== */
+/* ===== Phase 324 QA-compatible hidden text stream badge ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::after {
     content: "memikirkan" !important;
     display: block !important;
@@ -18609,4 +18609,66 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::after 
     opacity: 0 !important;
     overflow: hidden !important;
     pointer-events: none !important;
+}
+
+/* ===== Phase 324 EOF guard: stable text writing/replay flow ===== */
+body.hai-theme-adminlte-classic .assistant-message-container.is-writing,
+body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing {
+    position: relative !important;
+    padding-left: 0 !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-writing::before,
+body.hai-theme-adminlte-classic .assistant-message-container.is-writing::after,
+body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing::before,
+body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-writing > .hai-stream-livebar,
+body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing > .hai-stream-livebar {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    visibility: hidden !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-writing .assistant-message,
+body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing .assistant-message {
+    margin-top: 0 !important;
+    transform: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-writing .assistant-message::before,
+body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing .assistant-message::before {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="writing"]::before,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="writing"]::after {
+    content: none !important;
+    display: none !important;
 }

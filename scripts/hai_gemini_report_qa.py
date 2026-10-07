@@ -687,21 +687,22 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase323_empty_stream_fallback",
-        "Robot Typing Visual Fix Phase 323" in readme
-        and "20261007-phase323" in readme
+        "readme_phase324_empty_stream_fallback",
+        "Text Replay Flow Fix Phase 324" in readme
+        and "20261007-phase324" in readme
         and "ghost" in readme
         and "skeleton halus" in readme
         and "dikuras bertahap" in readme
         and "dots mobile" in readme,
     )
     add(
-        "report_phase323_empty_stream_fallback",
-        "Phase 323" in report
-        and "20261007-phase323" in report
+        "report_phase324_empty_stream_fallback",
+        "Phase 324" in report
+        and "20261007-phase324" in report
         and "empty-stream-fallback" in report
         and "robot typing" in report
         and "dots mobile" in report
+        and "badge hijau vertikal" in report
         and "buffer" in report
         and "bubble assistant" in report,
     )

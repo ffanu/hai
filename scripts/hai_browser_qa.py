@@ -3075,7 +3075,7 @@ STREAMING_STATES_FLOW_JS = """
       return {
         ok: Boolean(
           (state.intent === 'image' && container.dataset.streamPhase === 'image-rendering' && container.classList.contains('is-rendering') && /mendesain gambar/i.test(nextBadge)) ||
-          (state.intent !== 'image' && container.dataset.streamPhase === 'writing' && container.classList.contains('is-writing') && /sedang diketik/i.test(nextBadge))
+          (state.intent !== 'image' && container.dataset.streamPhase === 'writing' && container.classList.contains('is-writing') && /mengetik jawaban/i.test(status?.textContent?.trim() || ''))
         ),
         streamPhase: container.dataset.streamPhase || '',
         isWriting: Boolean(container.classList.contains('is-writing')),
@@ -3117,7 +3117,7 @@ STREAMING_STATES_FLOW_JS = """
     textState.streamPhase === 'thinking' &&
     /memikirkan/i.test(textState.streamBadge) &&
     textState.firstTokenProbe?.ok &&
-    /sedang diketik/i.test(textState.firstTokenProbe?.streamBadge || '') &&
+    /mengetik jawaban/i.test(textState.firstTokenProbe?.statusText || '') &&
     textState.isThinking &&
     !textState.hasImageCard &&
     textState.submitIsStop &&
