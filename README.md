@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://hai.harmonika.id"><img alt="Production" src="https://img.shields.io/badge/production-hai.harmonika.id-0d6efd?style=for-the-badge"></a>
-  <img alt="Phase" src="https://img.shields.io/badge/UI%20marker-20261007--phase330-17a2b8?style=for-the-badge">
+  <img alt="Phase" src="https://img.shields.io/badge/UI%20marker-20261007--phase331-17a2b8?style=for-the-badge">
   <img alt="Python" src="https://img.shields.io/badge/Python-Flask-343a40?style=for-the-badge&logo=python&logoColor=white">
   <img alt="Streaming" src="https://img.shields.io/badge/SSE-streaming-success?style=for-the-badge">
 </p>
@@ -29,7 +29,7 @@
 
 Harmonika AI WebUI adalah fork/custom dari `Toy-97/Chat-WebUI` yang dibangun ulang untuk kebutuhan publik Harmonika. Browser cukup memakai endpoint web sederhana; routing engine seperti Google Mode, Codex, image bridge, Library grounding, dan replay stream dikerjakan server-side agar credential/internal engine tidak terekspos ke pelanggan.
 
-> Production saat ini berjalan di `https://hai.harmonika.id` dengan marker asset `20261007-phase330`.
+> Production saat ini berjalan di `https://hai.harmonika.id` dengan marker asset `20261007-phase331`.
 
 ## Fitur utama
 
@@ -157,7 +157,7 @@ Audit production:
 ```bash
 python3 scripts/hai_release_audit.py \
   --base-url https://hai.harmonika.id \
-  --expected-asset-marker 20261007-phase330
+  --expected-asset-marker 20261007-phase331
 ```
 
 Browser QA streaming:
@@ -189,7 +189,7 @@ python3 scripts/hai_browser_qa.py \
 ## Status release terbaru
 
 - Production URL: `https://hai.harmonika.id`
-- UI marker: `20261007-phase330`
+- UI marker: `20261007-phase331`
 - Release audit terakhir: `6/6 OK`
 - Streaming QA desktop/mobile: OK
 - Gemini report QA: `99/99`
@@ -501,7 +501,7 @@ python3 scripts/hai_browser_qa.py \
 - Public Gate Sync Phase 317: full public release gate production dijalankan ulang setelah Phase 317 dan lulus `72/72 OK` memakai asset marker `20261007-phase317`; visual snapshots tetap `17/17 OK`, release audit `6/6`, streaming states desktop/mobile hijau, Markdown rich desktop/mobile hijau, dan `/api/readiness` disiapkan untuk sinkron ke `phase317-public-release-gate`.
 - Library Hybrid Vector Index Phase 318: Library/RAG kini membuat private hybrid sparse+hash-vector chunk index (`library_index_mode=private_hybrid_sparse_vector_chunk_index`) dengan ranking `hybrid_vector_bm25_coverage_rerank`. Search menggabungkan coverage query, BM25-lite, semantic alias, dan cosine similarity lokal (`library_vector_mode=private_local_hash_embedding`) tanpa mengekspos embedding/vector/full text ke response publik. `rag_library` tetap belum diklaim full karena managed external vector DB/embedding lintas dokumen belum production.
 - Realtime Loader UI Stable Gate Phase 319: cache marker UI naik ke `20261007-phase319`; loading realtime diperjelas dengan badge `LIVE`, robot kecil bergaya animasi GIF, teks helper "sedang diketik", kartu `DESIGN` untuk pembuatan gambar, dan code block bergaya editor. Full public release gate production stabil lulus `72/72 OK`, visual snapshots `17/17 OK`, release audit `6/6`, serta QA runner browser flow berat diberi retry/cooldown agar tidak gagal palsu saat provider lambat.
-- Header Connection Cleanup Phase 330: cache marker UI naik ke `20261007-phase330`; `hai-connection-pill` kanan atas dihapus dari header agar chrome chat lebih bersih. Status realtime tetap dikomunikasikan lewat livebar kecil di timeline chat, sedangkan card Library, tombol export Markdown/JSON, dan placeholder `.assistant-message` kosong tetap disembunyikan. Backend Library/RAG dan helper export internal tetap dipertahankan agar tidak memutus QA/fitur teknis.
+- Empty Writing Bubble Cleanup Phase 331: cache marker UI naik ke `20261007-phase331`; bubble kosong `<div class="assistant-message" data-loading="writing"><div class="markdown-content"></div></div>` tidak lagi dipasang/ditampilkan. Saat belum ada teks, placeholder tetap hidden sebagai `thinking`; saat teks pertama masuk, atribut loading dilepas dan Markdown baru dirender. `hai-connection-pill`, card Library, tombol export Markdown/JSON, dan placeholder `.assistant-message` kosong tetap disembunyikan agar chrome chat bersih.
 
 - Release Gate Retry Phase 154: public release gate memberi retry terbatas untuk `chat-text` desktop dan regenerate mobile karena provider/upstream kadang mengembalikan 502 sementara, sementara rerun spesifik terbukti lulus dan bukan bug UI/layout.
 - Image Modal QA Phase 155: `hai_browser_qa.py` kini punya flow `image-modal` untuk memverifikasi preview gambar putih classic di desktop/mobile, termasuk backdrop tanpa blur, ukuran card, tombol Unduh/Tutup, dan tidak ada horizontal overflow.

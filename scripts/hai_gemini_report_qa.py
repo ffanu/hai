@@ -687,23 +687,22 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase330_header_connection_cleanup",
-        "Header Connection Cleanup Phase 330" in readme
-        and "20261007-phase330" in readme
-        and "`hai-connection-pill` kanan atas dihapus" in readme
-        and "placeholder `.assistant-message`" in readme
-        and "livebar kecil di timeline chat" in readme
-        and "Backend Library/RAG" in readme
+        "readme_phase331_empty_writing_bubble_cleanup",
+        "Empty Writing Bubble Cleanup Phase 331" in readme
+        and "20261007-phase331" in readme
+        and 'data-loading="writing"' in readme
+        and "Markdown baru dirender" in readme
+        and "`hai-connection-pill`" in readme
         and "card Library" in readme,
     )
     add(
-        "report_phase330_header_connection_cleanup",
-        "Phase 330" in report
-        and "20261007-phase330" in report
+        "report_phase331_empty_writing_bubble_cleanup",
+        "Phase 331" in report
+        and "20261007-phase331" in report
+        and 'data-loading="writing"' in report
         and "hai-connection-pill" in report
         and ".assistant-message" in report
         and "export-buttons" in report
-        and "Backend Library/RAG" in report
         and "timeline chat" in report
         and "bubble assistant" in report,
     )

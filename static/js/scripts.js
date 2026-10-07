@@ -32,7 +32,7 @@ const HAI_MAX_ATTACHMENTS = 3;
 const HAI_SUPPORTED_DOCUMENT_EXTENSIONS = ['.pdf', '.txt', '.csv', '.docx', '.xlsx'];
 const HAI_SUPPORTED_IMAGE_MIME = ['image/png', 'image/jpeg', 'image/webp'];
 const HAI_LIBRARY_GROUNDING_LIMIT = 3;
-const HAI_ICON_VERSION = '20261007-phase330';
+const HAI_ICON_VERSION = '20261007-phase331';
 const HAI_STREAM_STALL_FINALIZE_MS = 24000;
 const HAI_LIBRARY_GROUNDING_STORAGE_KEY = 'hai_library_grounding_mode';
 const HAI_LIBRARY_CONTEXT_STORAGE_KEY = 'hai_library_context_mode';
@@ -603,7 +603,9 @@ function markAssistantFirstVisibleChunk(container, intent = 'text', options = {}
     setAssistantStreamPhase(container, 'writing');
     ensureAssistantStreamLivebar(container, 'text', 'writing');
     const message = container?.querySelector?.('.assistant-message');
-    if (message) message.dataset.loading = 'writing';
+    if (message && !message.textContent.trim() && !message.children.length) {
+        message.dataset.loading = 'thinking';
+    }
     setHaiLiveStatus(options.status || 'textWriting');
 }
 
@@ -783,6 +785,17 @@ async function persistAssistantErrorMessage(messageId, text, options = {}) {
 
 function renderAssistantMarkdown(messageElement, raw, messageEndTag = END_TAG, reasoningExpanded = false, immediate = false) {
     if (!messageElement) return;
+    const visibleRaw = String(raw || '');
+    if (!visibleRaw.trim()) {
+        if (!messageElement.textContent.trim() && !messageElement.children.length) {
+            messageElement.innerHTML = '';
+            messageElement.dataset.loading = 'thinking';
+        }
+        return;
+    }
+    if (messageElement.dataset.loading === 'thinking' || messageElement.dataset.loading === 'writing') {
+        messageElement.removeAttribute('data-loading');
+    }
     if (!messageElement.reactRoot) {
         messageElement.reactRoot = ReactDOM.createRoot(messageElement);
     }
@@ -791,7 +804,7 @@ function renderAssistantMarkdown(messageElement, raw, messageEndTag = END_TAG, r
         ?.dataset
         ?.intent || '';
     const allowImageArtifacts = shouldAllowImageArtifacts(raw, containerIntent);
-    messageElement._pendingMarkdownRender = { raw, messageEndTag, reasoningExpanded, allowImageArtifacts };
+    messageElement._pendingMarkdownRender = { raw: visibleRaw, messageEndTag, reasoningExpanded, allowImageArtifacts };
     const renderNow = () => {
         const pending = messageElement._pendingMarkdownRender;
         messageElement._markdownRenderFrame = null;
