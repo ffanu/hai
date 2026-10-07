@@ -3045,6 +3045,271 @@ def _clean_chat_title(title):
     title = re.sub(r"\s+", " ", title).strip().strip("\"'“”‘’")
     return (title[:80].strip() or "New Chat")
 
+def _developer_endpoint_catalog():
+    """Public, non-secret endpoint contract for developer handoff pages."""
+    public_origin = os.getenv("HAI_PUBLIC_ORIGIN", "https://hai.harmonika.id").rstrip("/")
+    upstream_origin = os.getenv("HAI_MEMBER_AI_BASE_URL", "https://chat.harmonika.id/v1/member-ai").rstrip("/")
+    updated = "2026-10-08"
+    groups = [
+        {
+            "id": "web_chat",
+            "title": "Web Chat Core",
+            "description": "Endpoint utama untuk UI web Harmonika AI. Streaming memakai plain/SSE-compatible stream dan state per device cookie.",
+            "badge": "Production",
+            "endpoints": [
+                {
+                    "method": "POST",
+                    "path": "/chat",
+                    "summary": "Kirim pesan chat dan terima jawaban streaming.",
+                    "auth": "Device cookie web",
+                    "request": {"message": "Halo Harmonika AI", "attachments": [], "conversation": []},
+                    "response": "Stream teks bertahap + header X-HAI-Response-ID dan X-HAI-Sources jika ada referensi.",
+                },
+                {
+                    "method": "POST",
+                    "path": "/continue_generation",
+                    "summary": "Lanjutkan jawaban assistant dari konteks terakhir.",
+                    "auth": "Device cookie web",
+                    "request": {"message": "lanjutkan", "conversation": []},
+                    "response": "Stream lanjutan jawaban assistant.",
+                },
+                {
+                    "method": "POST",
+                    "path": "/generate-title",
+                    "summary": "Membuat judul singkat untuk chat aktif.",
+                    "auth": "Device cookie web",
+                    "request": {"message": "Isi percakapan awal"},
+                    "response": {"title": "Judul chat"},
+                },
+            ],
+        },
+        {
+            "id": "capability_readiness",
+            "title": "Capability & Readiness",
+            "description": "Kontrak discovery agar client membaca fitur aktif, limit, status gate, dan roadmap tanpa hardcode.",
+            "badge": "Public JSON",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "path": "/api/capabilities",
+                    "summary": "Feature flags, routing policy, limit upload/gambar, dan mode backend.",
+                    "auth": "Tidak perlu login",
+                    "response": {"features": {"chat": True, "streaming": True, "file_upload": True}, "limits": {"attachments_per_message": 3}},
+                },
+                {
+                    "method": "GET",
+                    "path": "/api/readiness",
+                    "summary": "Status production MVP, gate QA, dan prioritas roadmap.",
+                    "auth": "Tidak perlu login",
+                    "response": {"production": {"public_mvp_ready": True, "full_platform_complete": False}},
+                },
+                {
+                    "method": "GET",
+                    "path": "/healthz",
+                    "summary": "Health check ringan untuk service monitor.",
+                    "auth": "Tidak perlu login",
+                    "response": {"ok": True, "service": "harmonika-chat-webui"},
+                },
+                {
+                    "method": "GET",
+                    "path": "/api/endpoints",
+                    "summary": "Daftar endpoint machine-readable untuk developer.",
+                    "auth": "Tidak perlu login",
+                    "response": {"ok": True, "groups": "Endpoint groups"},
+                },
+            ],
+        },
+        {
+            "id": "attachments_files",
+            "title": "Files, Attachment & Image Artifacts",
+            "description": "Upload/parse dokumen sementara, generate gambar private artifact, dan preview/download lewat proxy privat.",
+            "badge": "Media",
+            "endpoints": [
+                {
+                    "method": "POST",
+                    "path": "/api/attachments/parse",
+                    "summary": "Parse lampiran PDF/TXT/CSV/DOCX/XLSX/gambar untuk chat web.",
+                    "auth": "Device cookie web",
+                    "content_type": "multipart/form-data",
+                    "request": {"file": "<binary>", "max_size": "10 MB"},
+                    "response": {"ok": True, "attachment": {"name": "contoh.pdf", "mime_type": "application/pdf", "text": "Cuplikan aman"}},
+                },
+                {
+                    "method": "POST",
+                    "path": "/api/images/generations",
+                    "summary": "Buat gambar sebagai private file artifact; provider internal tetap server-side.",
+                    "auth": "Device cookie web + rate limit image",
+                    "request": {"prompt": "Logo futuristik Harmonika AI", "size": "1024x1024", "count": 1},
+                    "response": {"ok": True, "images": [{"file_id": "file_xxx", "preview_url": "/api/files/file_xxx/preview"}]},
+                },
+                {
+                    "method": "GET",
+                    "path": "/api/files/{file_id}/preview",
+                    "summary": "Preview artifact privat tanpa expose URL backend.",
+                    "auth": "Device cookie/ownership",
+                    "response": "Binary image/svg/png/jpeg/webp sesuai artifact.",
+                },
+                {
+                    "method": "GET",
+                    "path": "/api/files/{file_id}/download",
+                    "summary": "Download artifact privat dengan Content-Disposition aman.",
+                    "auth": "Device cookie/ownership",
+                    "response": "Binary attachment.",
+                },
+            ],
+        },
+        {
+            "id": "history_realtime",
+            "title": "History & Realtime Recovery",
+            "description": "Sinkronisasi history per device dan replay event stream saat koneksi streaming putus.",
+            "badge": "State",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "path": "/api/history",
+                    "summary": "Ambil history chat web milik device.",
+                    "auth": "Device cookie web",
+                    "response": {"ok": True, "chats": [], "active": ""},
+                },
+                {
+                    "method": "PUT",
+                    "path": "/api/history",
+                    "summary": "Simpan snapshot history chat web.",
+                    "auth": "Device cookie web",
+                    "request": {"chats": [], "active": "chat_id"},
+                    "response": {"ok": True},
+                },
+                {
+                    "method": "POST",
+                    "path": "/api/history",
+                    "summary": "Simpan history via sendBeacon/fallback POST.",
+                    "auth": "Device cookie web",
+                    "request": {"chats": [], "active": "chat_id"},
+                    "response": {"ok": True},
+                },
+                {
+                    "method": "GET",
+                    "path": "/api/realtime/events?response_id=...&after_sequence=...",
+                    "summary": "Replay JSON/SSE event response aktif untuk recovery stream.",
+                    "auth": "Device cookie web",
+                    "response": {"ok": True, "events": [], "state": {"terminal": True}},
+                },
+                {
+                    "method": "POST",
+                    "path": "/api/realtime/ticket",
+                    "summary": "Kontrak ticket WSS masa depan; saat belum aktif fail-safe 503.",
+                    "auth": "Device cookie web",
+                    "response": {"ok": False, "error": "realtime_wss_not_ready", "fallback": { "stream": "/chat" }},
+                },
+            ],
+        },
+        {
+            "id": "library_admin",
+            "title": "Library/RAG & Admin",
+            "description": "Endpoint Library/RAG tetap server-side/private; UI card Library disembunyikan dari publik, API masih tersedia untuk grounding aman.",
+            "badge": "Internal-ready",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "path": "/api/library/documents",
+                    "summary": "List dokumen Library per device tanpa full text.",
+                    "auth": "Device cookie web",
+                    "response": {"ok": True, "documents": []},
+                },
+                {
+                    "method": "POST",
+                    "path": "/api/library/documents",
+                    "summary": "Upload dokumen permanen Library per device.",
+                    "auth": "Device cookie web",
+                    "content_type": "multipart/form-data",
+                    "response": {"ok": True, "document": {"id": "lib_xxx", "preview": "Cuplikan"}},
+                },
+                {
+                    "method": "DELETE",
+                    "path": "/api/library/documents/{doc_id}",
+                    "summary": "Hapus dokumen Library milik device.",
+                    "auth": "Device cookie web",
+                    "response": {"ok": True, "deleted": True},
+                },
+                {
+                    "method": "POST",
+                    "path": "/api/library/search",
+                    "summary": "Cari snippet Library/RAG tanpa mengekspos full text.",
+                    "auth": "Device cookie web",
+                    "request": {"query": "router", "limit": 5},
+                    "response": {"ok": True, "results": []},
+                },
+                {
+                    "method": "GET",
+                    "path": "/api/admin/overview",
+                    "summary": "Observability aggregate-only tanpa isi chat/dokumen/device ID/secret.",
+                    "auth": "Server/admin network policy",
+                    "response": {"ok": True, "privacy": {"aggregate_only": True}},
+                },
+            ],
+        },
+        {
+            "id": "chat_harmonika_bridge",
+            "title": "Bridge ke chat.harmonika.id",
+            "description": "Endpoint upstream member AI yang dipanggil server-side oleh HAI. Token/credential tidak pernah dikirim ke browser.",
+            "badge": "Server-side only",
+            "base_url": upstream_origin,
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "path": "/capabilities",
+                    "summary": "Backend membaca capability upstream member AI.",
+                    "auth": "Server-side bearer token",
+                    "response": {"features": {"chat": True, "image_generation": True}},
+                },
+                {
+                    "method": "POST",
+                    "path": "/chat/messages",
+                    "summary": "Backend mengirim chat/attachment ke Google Mode/member AI secara server-to-server.",
+                    "auth": "Server-side bearer token",
+                    "request": {"message": "Halo", "attachment_ids": []},
+                    "response": "SSE started/delta/final atau error/stopped.",
+                },
+                {
+                    "method": "POST",
+                    "path": "/images/generations",
+                    "summary": "Backend membuat job gambar dan menyimpan hasil sebagai private file artifact lokal.",
+                    "auth": "Server-side bearer token",
+                    "request": {"prompt": "Gambar...", "size": "1024x1024", "count": 1},
+                    "response": {"job_id": "img_job_xxx", "images": [{"file_id": "file_xxx"}]},
+                },
+                {
+                    "method": "GET",
+                    "path": "/files/{file_id}/preview|download",
+                    "summary": "Backend mengambil file upstream lalu mem-proxy via /api/files lokal.",
+                    "auth": "Server-side bearer token + ownership",
+                    "response": "Binary image/file.",
+                },
+            ],
+        },
+    ]
+    totals = {
+        "groups": len(groups),
+        "endpoints": sum(len(group.get("endpoints", [])) for group in groups),
+    }
+    return {
+        "ok": True,
+        "service": "harmonika-ai-endpoint-catalog",
+        "updated": updated,
+        "base_url": public_origin,
+        "upstream_base_url": upstream_origin,
+        "documentation_url": f"{public_origin}/api-endpoints",
+        "json_url": f"{public_origin}/api/endpoints",
+        "totals": totals,
+        "security_notes": [
+            "Credential chat.harmonika.id hanya dipakai server-side.",
+            "Browser memakai endpoint hai.harmonika.id dan device cookie.",
+            "File/artifact tampil melalui private file_id, bukan URL publik permanen.",
+            "Admin overview aggregate-only tanpa isi chat, teks dokumen, device ID, token, atau secret.",
+        ],
+        "groups": groups,
+    }
+
 # Route to render the index page
 @app.route('/')
 def index():
@@ -3059,6 +3324,10 @@ def chat_session(chat_id):
 @app.route('/admin')
 def admin_dashboard():
     return render_template('admin.html')
+
+@app.route('/api-endpoints')
+def api_endpoints_page():
+    return render_template('api_endpoints.html', catalog=_developer_endpoint_catalog())
 
 @app.route('/healthz')
 def healthz():
@@ -3078,6 +3347,10 @@ def healthz():
 @app.route('/api/admin/overview', methods=['GET'])
 def api_admin_overview():
     return jsonify(_admin_overview_snapshot())
+
+@app.route('/api/endpoints', methods=['GET'])
+def api_endpoints_catalog():
+    return jsonify(_developer_endpoint_catalog())
 
 @app.route('/api/capabilities', methods=['GET'])
 def api_capabilities():

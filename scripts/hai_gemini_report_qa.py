@@ -687,24 +687,22 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase331_empty_writing_bubble_cleanup",
-        "Empty Writing Bubble Cleanup Phase 331" in readme
-        and "20261007-phase331" in readme
-        and 'data-loading="writing"' in readme
-        and "Markdown baru dirender" in readme
-        and "`hai-connection-pill`" in readme
-        and "card Library" in readme,
+        "readme_phase332_api_endpoint_catalog",
+        "Developer API Endpoint Catalog Phase 332" in readme
+        and "20261007-phase332" in readme
+        and "/api-endpoints" in readme
+        and "/api/endpoints" in readme
+        and "chat.harmonika.id/v1/member-ai" in readme
+        and "credential upstream tidak diekspos" in readme,
     )
     add(
-        "report_phase331_empty_writing_bubble_cleanup",
-        "Phase 331" in report
-        and "20261007-phase331" in report
-        and 'data-loading="writing"' in report
-        and "hai-connection-pill" in report
-        and ".assistant-message" in report
-        and "export-buttons" in report
-        and "timeline chat" in report
-        and "bubble assistant" in report,
+        "report_phase332_api_endpoint_catalog",
+        "Phase 332" in report
+        and "20261007-phase332" in report
+        and "/api-endpoints" in report
+        and "/api/endpoints" in report
+        and "chat.harmonika.id/v1/member-ai" in report
+        and "credential/token" in report,
     )
 
     release_match = re.search(r"Release aktif: `([^`]+)`", report)

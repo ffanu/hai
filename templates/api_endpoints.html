@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Harmonika AI · API Endpoints</title>
+    <meta name="description" content="Dokumentasi endpoint publik Harmonika AI dan bridge server-side ke chat.harmonika.id.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="canonical" href="https://hai.harmonika.id/api-endpoints">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=20261007-phase332">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+</head>
+<body class="hai-theme-adminlte-classic hai-api-page">
+    <main class="hai-api-shell" aria-labelledby="hai-api-title">
+        <header class="hai-api-hero">
+            <nav class="hai-api-nav" aria-label="Navigasi API">
+                <a href="/" class="hai-api-brand" aria-label="Kembali ke Harmonika AI">
+                    <img src="/static/images/hai-logo.png" alt="">
+                    <span>
+                        <strong>Harmonika AI</strong>
+                        <small>Developer API</small>
+                    </span>
+                </a>
+                <div class="hai-api-nav-actions">
+                    <a href="/api/endpoints" class="hai-api-button"><i class="fa fa-code" aria-hidden="true"></i> JSON</a>
+                    <a href="/admin" class="hai-api-button"><i class="fa fa-line-chart" aria-hidden="true"></i> Admin</a>
+                    <a href="/" class="hai-api-button is-primary"><i class="fa fa-comments-o" aria-hidden="true"></i> Buka Chat</a>
+                </div>
+            </nav>
+            <section class="hai-api-hero-grid">
+                <div class="hai-api-hero-copy">
+                    <p class="hai-api-kicker">Production endpoint catalog</p>
+                    <h1 id="hai-api-title">API Endpoint Harmonika AI</h1>
+                    <p>Daftar endpoint untuk developer Harmonika: endpoint publik <code>{{ catalog.base_url }}</code> dan bridge server-side ke <code>{{ catalog.upstream_base_url }}</code>. Secret dan token upstream tidak pernah diekspos ke browser.</p>
+                    <div class="hai-api-hero-actions">
+                        <a href="#endpoint-groups" class="hai-api-button is-primary"><i class="fa fa-list" aria-hidden="true"></i> Lihat endpoint</a>
+                        <a href="/api/capabilities" class="hai-api-button"><i class="fa fa-toggle-on" aria-hidden="true"></i> Capabilities</a>
+                        <a href="/api/readiness" class="hai-api-button"><i class="fa fa-check-circle" aria-hidden="true"></i> Readiness</a>
+                    </div>
+                </div>
+                <aside class="hai-api-hero-card" aria-label="Ringkasan endpoint">
+                    <span class="hai-api-orb" aria-hidden="true"></span>
+                    <dl>
+                        <div>
+                            <dt>Groups</dt>
+                            <dd>{{ catalog.totals.groups }}</dd>
+                        </div>
+                        <div>
+                            <dt>Endpoints</dt>
+                            <dd>{{ catalog.totals.endpoints }}</dd>
+                        </div>
+                        <div>
+                            <dt>Updated</dt>
+                            <dd>{{ catalog.updated }}</dd>
+                        </div>
+                    </dl>
+                    <p>Kontrak ini machine-readable di <a href="/api/endpoints">/api/endpoints</a>.</p>
+                </aside>
+            </section>
+        </header>
+
+        <section class="hai-api-security" aria-label="Catatan keamanan">
+            {% for note in catalog.security_notes %}
+            <article>
+                <i class="fa fa-shield" aria-hidden="true"></i>
+                <span>{{ note }}</span>
+            </article>
+            {% endfor %}
+        </section>
+
+        <section id="endpoint-groups" class="hai-api-groups" aria-label="Daftar endpoint">
+            {% for group in catalog.groups %}
+            <article class="hai-api-group" id="{{ group.id }}">
+                <div class="hai-api-group-head">
+                    <div>
+                        <span class="hai-api-badge">{{ group.badge }}</span>
+                        <h2>{{ group.title }}</h2>
+                        <p>{{ group.description }}</p>
+                        {% if group.base_url %}
+                        <code class="hai-api-base">{{ group.base_url }}</code>
+                        {% endif %}
+                    </div>
+                    <a href="#{{ group.id }}" class="hai-api-anchor" aria-label="Link ke {{ group.title }}">#</a>
+                </div>
+                <div class="hai-api-endpoint-list">
+                    {% for endpoint in group.endpoints %}
+                    <section class="hai-api-endpoint-card">
+                        <div class="hai-api-endpoint-top">
+                            <span class="hai-api-method method-{{ endpoint.method|lower }}">{{ endpoint.method }}</span>
+                            <code>{{ endpoint.path }}</code>
+                        </div>
+                        <p>{{ endpoint.summary }}</p>
+                        <dl class="hai-api-meta">
+                            <div>
+                                <dt>Auth</dt>
+                                <dd>{{ endpoint.auth }}</dd>
+                            </div>
+                            {% if endpoint.content_type %}
+                            <div>
+                                <dt>Content-Type</dt>
+                                <dd>{{ endpoint.content_type }}</dd>
+                            </div>
+                            {% endif %}
+                        </dl>
+                        {% if endpoint.request %}
+                        <details class="hai-api-details">
+                            <summary>Contoh request</summary>
+                            <pre><code>{{ endpoint.request | tojson(indent=2) }}</code></pre>
+                        </details>
+                        {% endif %}
+                        {% if endpoint.response %}
+                        <details class="hai-api-details">
+                            <summary>Contoh response</summary>
+                            {% if endpoint.response is string %}
+                            <pre><code>{{ endpoint.response }}</code></pre>
+                            {% else %}
+                            <pre><code>{{ endpoint.response | tojson(indent=2) }}</code></pre>
+                            {% endif %}
+                        </details>
+                        {% endif %}
+                    </section>
+                    {% endfor %}
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
