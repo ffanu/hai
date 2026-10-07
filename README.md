@@ -1,10 +1,206 @@
-# Harmonika AI Chat WebUI Custom
+<p align="center">
+  <img src="static/images/hai-logo.png" alt="Harmonika AI" width="116" height="116">
+</p>
 
-Fork/custom dari `Toy-97/Chat-WebUI` untuk domain `hai.harmonika.id`.
+<h1 align="center">Harmonika AI WebUI</h1>
 
-Dokumentasi endpoint untuk developer Harmonika tersedia di [docs/developer-api-endpoints.md](docs/developer-api-endpoints.md). Ringkasnya, web publik memakai `POST /chat` untuk streaming utama, `GET /api/capabilities` untuk feature flags, `GET /api/readiness` untuk status production, `/api/attachments/parse` untuk upload sementara, `/api/library/*` untuk Library/RAG per device, `/api/images/generations` + `/api/files/{file_id}/preview|download` untuk gambar/artifact privat, dan `/api/realtime/events` untuk replay stream.
+<p align="center">
+  Web chat AI modern untuk <strong>hai.harmonika.id</strong> — streaming realtime, Google Mode orchestration, Codex routing, upload dokumen/gambar, image artifact privat, Library/RAG per device, dan dashboard observability.
+</p>
 
-Perubahan custom:
+<p align="center">
+  <a href="https://hai.harmonika.id"><img alt="Production" src="https://img.shields.io/badge/production-hai.harmonika.id-0d6efd?style=for-the-badge"></a>
+  <img alt="Phase" src="https://img.shields.io/badge/UI%20marker-20261007--phase321-17a2b8?style=for-the-badge">
+  <img alt="Python" src="https://img.shields.io/badge/Python-Flask-343a40?style=for-the-badge&logo=python&logoColor=white">
+  <img alt="Streaming" src="https://img.shields.io/badge/SSE-streaming-success?style=for-the-badge">
+</p>
+
+<p align="center">
+  <a href="#fitur-utama">Fitur</a> ·
+  <a href="#arsitektur-ringkas">Arsitektur</a> ·
+  <a href="#endpoint-untuk-developer">Endpoint</a> ·
+  <a href="#quick-start-local">Quick Start</a> ·
+  <a href="#qa--release-check">QA</a>
+</p>
+
+---
+
+## Gambaran singkat
+
+Harmonika AI WebUI adalah fork/custom dari `Toy-97/Chat-WebUI` yang dibangun ulang untuk kebutuhan publik Harmonika. Browser cukup memakai endpoint web sederhana; routing engine seperti Google Mode, Codex, image bridge, Library grounding, dan replay stream dikerjakan server-side agar credential/internal engine tidak terekspos ke pelanggan.
+
+> Production saat ini berjalan di `https://hai.harmonika.id` dengan marker asset `20261007-phase321`.
+
+## Fitur utama
+
+| Area | Status | Ringkasan |
+| --- | --- | --- |
+| 💬 Chat AI umum | ✅ Production | Chat umum, ide, konten, coding ringan, analisa, dan teman ngobrol. |
+| ⚡ Streaming realtime | ✅ Production | SSE streaming dengan loading teks/gambar yang dipoles, Stop, Queue, Regenerate, dan replay fallback. |
+| 🧭 Google Mode orchestration | ✅ Production | Default untuk jawaban umum, web, file, image input, dan percakapan natural. |
+| 🛠️ Codex routing | ✅ Production | Dipakai untuk tugas teknis berat/development dan task gambar privat sesuai policy backend. |
+| 📎 Upload dokumen | ✅ Production | PDF, TXT, CSV, DOCX, XLSX; maksimal 3 lampiran/pesan dan batas 10 MB. |
+| 🖼️ Upload gambar/vision | ✅ Production | PNG/JPEG/WebP untuk analisis gambar melalui pipeline vision. |
+| 🎨 Image generation | ✅ Production | Hasil gambar sebagai artifact privat `file_id`, preview/download via proxy lokal, tanpa public URL permanen. |
+| 📚 Library/RAG per device | ✅ Foundation | Upload, search, snippet grounding, toggle Cuplikan/Penuh; tetap tidak mengekspos full text ke UI. |
+| 🔎 Referensi web | ✅ Production | Source chips/favicon compact, tanpa menampilkan full URL panjang di bubble. |
+| 📊 Admin observability | ✅ Production | `/admin` dan `/api/admin/overview` aggregate-only tanpa isi chat/dokumen/device ID. |
+
+## Tampilan dan UX
+
+- 🧑‍💻 Tampilan chat klasik-modern gaya dashboard: sidebar gelap, topbar putih, chat surface bersih.
+- ✍️ Markdown rich: heading, list, tabel, LaTeX, code block dengan tombol salin.
+- 🤖 Loading jawaban Phase321: livebar kecil, skeleton halus, typewriter streaming, dan animasi gambar terpisah.
+- 📱 Responsif: desktop, mobile, tablet, landscape, keyboard/composer, dan sidebar mobile.
+- 🔒 Guard publik: sanitizer Markdown, no public media URL, no terminal/file-manager leak, rate limit, security headers.
+
+## Arsitektur ringkas
+
+```mermaid
+flowchart LR
+  User[Browser / hai.harmonika.id] --> WebUI[Flask WebUI]
+  WebUI --> Chat[/POST /chat SSE/]
+  Chat --> Router{Server-side routing}
+  Router --> Google[Google Mode / member-ai bridge]
+  Router --> Codex[Codex for heavy technical/image tasks]
+  Router --> Library[Private Library/RAG]
+  Router --> Image[Private image artifact bridge]
+  Image --> Files[/api/files/:file_id preview/download/]
+  Chat --> Replay[/api/realtime/events/]
+```
+
+Jika GitHub tidak merender diagram Mermaid, ringkasnya:
+
+1. Browser memanggil endpoint web publik.
+2. Backend memilih mode/engine secara server-side.
+3. Response dikirim streaming ke UI.
+4. File/gambar tetap lewat artifact privat, bukan URL publik permanen.
+
+## Endpoint untuk developer
+
+Dokumentasi lengkap endpoint ada di:
+
+➡️ [docs/developer-api-endpoints.md](docs/developer-api-endpoints.md)
+
+Endpoint penting:
+
+| Endpoint | Fungsi |
+| --- | --- |
+| `POST /chat` | Streaming chat utama. |
+| `GET /api/capabilities` | Feature flags dan limit production. |
+| `GET /api/readiness` | Status production, gate, roadmap, dan core readiness. |
+| `POST /api/attachments/parse` | Parse lampiran sementara untuk chat. |
+| `POST /api/images/generations` | Generate gambar via backend server-side. |
+| `GET /api/files/{file_id}/preview` | Preview artifact privat. |
+| `GET /api/files/{file_id}/download` | Download artifact privat. |
+| `GET/POST /api/library/documents` | Library dokumen per device. |
+| `POST /api/library/search` | Search snippet Library/RAG. |
+| `GET/PUT/POST /api/history` | History lokal web per device. |
+| `GET /api/realtime/events` | Replay/resume event stream. |
+| `POST /api/realtime/ticket` | Kontrak ticket WSS masa depan; fail-safe jika WSS belum aktif. |
+| `GET /api/admin/overview` | Observability aggregate-only. |
+| `GET /healthz` | Health check service. |
+
+Contoh streaming:
+
+```bash
+curl -N https://hai.harmonika.id/chat \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: text/event-stream' \
+  --data '{"message":"Beri 3 ide promosi usaha makanan rumahan"}'
+```
+
+## Quick start local
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+
+export HAI_PORT=3002
+python app.py
+```
+
+Buka:
+
+```text
+http://127.0.0.1:3002
+```
+
+## Environment production
+
+Minimal env yang disarankan:
+
+```bash
+HAI_PORT=3002
+HAI_FLASK_SECRET=<secret-panjang>
+HAI_DEVICE_SECRET=<secret-panjang-berbeda>
+HAI_RATE_LIMIT_STORAGE=file
+HAI_MEMBER_AI_BASE_URL=https://chat.harmonika.id/v1/member-ai
+HAI_MEMBER_AI_TOKEN=<token-server-side-jangan-commit>
+```
+
+Credential/API key tidak boleh disimpan di repo. Simpan di secret store atau env server.
+
+## QA & release check
+
+Perintah cepat:
+
+```bash
+node --check static/js/scripts.js
+python3 -m py_compile app.py scripts/*.py
+python3 scripts/hai_gemini_report_qa.py
+```
+
+Audit production:
+
+```bash
+python3 scripts/hai_release_audit.py \
+  --base-url https://hai.harmonika.id \
+  --expected-asset-marker 20261007-phase321
+```
+
+Browser QA streaming:
+
+```bash
+python3 scripts/hai_browser_qa.py \
+  --url https://hai.harmonika.id \
+  --viewport desktop \
+  --flow streaming-states
+```
+
+## Struktur repo
+
+```text
+.
+├── app.py                         # Backend Flask, routing, streaming, API
+├── templates/                     # HTML index/admin
+├── static/
+│   ├── css/styles.css             # UI system dan final cascade
+│   ├── js/scripts.js              # Chat UI, streaming, history, uploads
+│   └── images/                    # Logo dan icon HAI
+├── scripts/                       # QA, release audit, production checks
+├── docs/
+│   ├── developer-api-endpoints.md # Kontrak endpoint developer
+│   └── phase*.md                  # Catatan fase/audit historis
+└── requirements.txt
+```
+
+## Status release terbaru
+
+- Production URL: `https://hai.harmonika.id`
+- UI marker: `20261007-phase321`
+- Release audit terakhir: `6/6 OK`
+- Streaming QA desktop/mobile: OK
+- Gemini report QA: `99/99`
+- Full platform complete: belum diklaim; roadmap besar seperti WSS penuh, voice/video, calendar automation, dan RAG eksternal masih bertahap.
+
+---
+
+<details>
+<summary><strong>📜 Changelog fase lengkap</strong> — klik untuk membuka riwayat panjang development</summary>
+
+## Perubahan custom
 
 - API key dan base URL dikunci server-side via environment.
 - User tidak perlu membuka/isi Settings API.
@@ -2131,3 +2327,5 @@ Contributions are welcome! If you'd like to contribute to the project, please fo
 ## 📄 License
 
 Open-source and freely available under the [MIT License](https://opensource.org/licenses/MIT). Check the [LICENSE](LICENSE) file for specifics.
+
+</details>
