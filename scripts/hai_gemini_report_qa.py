@@ -687,19 +687,21 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase321_empty_stream_fallback",
-        "Calm Streaming Loader Phase 321" in readme
-        and "20261007-phase321" in readme
+        "readme_phase322_empty_stream_fallback",
+        "Calm Streaming Loader Phase 322" in readme
+        and "20261007-phase322" in readme
         and "livebar kecil" in readme
         and "skeleton halus" in readme
+        and "dikuras bertahap" in readme
         and "streaming-states" in readme,
     )
     add(
-        "report_phase321_empty_stream_fallback",
-        "Phase 321" in report
-        and "20261007-phase321" in report
+        "report_phase322_empty_stream_fallback",
+        "Phase 322" in report
+        and "20261007-phase322" in report
         and "empty-stream-fallback" in report
-        and "loader streaming yang terlalu ramai" in report
+        and "finalisasi stream" in report
+        and "buffer" in report
         and "bubble assistant" in report,
     )
 

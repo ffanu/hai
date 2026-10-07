@@ -32,7 +32,7 @@ const HAI_MAX_ATTACHMENTS = 3;
 const HAI_SUPPORTED_DOCUMENT_EXTENSIONS = ['.pdf', '.txt', '.csv', '.docx', '.xlsx'];
 const HAI_SUPPORTED_IMAGE_MIME = ['image/png', 'image/jpeg', 'image/webp'];
 const HAI_LIBRARY_GROUNDING_LIMIT = 3;
-const HAI_ICON_VERSION = '20261007-phase321';
+const HAI_ICON_VERSION = '20261007-phase322';
 const HAI_STREAM_STALL_FINALIZE_MS = 24000;
 const HAI_LIBRARY_GROUNDING_STORAGE_KEY = 'hai_library_grounding_mode';
 const HAI_LIBRARY_CONTEXT_STORAGE_KEY = 'hai_library_context_mode';
@@ -3917,6 +3917,7 @@ async function sendMessage(event) {
     let assistantTypewriterTimer = null;
     let stopAssistantTypewriter = () => {};
     let flushAssistantTypewriter = async () => {};
+    let drainAssistantTypewriter = async () => {};
 
     try {
         currentController = new AbortController();
@@ -3984,6 +3985,17 @@ async function sendMessage(event) {
                 pendingAssistantResponse = '';
                 renderAssistantMarkdown(assistantMessage, visibleAssistantResponse, END_TAG, false);
             }
+        };
+
+        drainAssistantTypewriter = async (maxWaitMs = 1400) => {
+            if (turnIntent === 'image') return;
+            const startedAt = Date.now();
+            while (pendingAssistantResponse && Date.now() - startedAt < maxWaitMs) {
+                stopAssistantTypewriter();
+                renderAssistantTypewriterFrame(true, false);
+                await new Promise((resolve) => window.setTimeout(resolve, 24));
+            }
+            await flushAssistantTypewriter();
         };
         
         const imageAttachments = turnAttachments.filter(attachment => attachment?.type === 'image' && attachment.base64);
@@ -4124,7 +4136,11 @@ async function sendMessage(event) {
         const finalizeAssistantStream = async (reason = 'done') => {
             if (streamSettled) return;
             streamSettled = true;
-            await flushAssistantTypewriter();
+            if (reason === 'done') {
+                await drainAssistantTypewriter();
+            } else {
+                await flushAssistantTypewriter();
+            }
             if (turnIntent === 'image' && fullResponse.trim() && !imageArtifactRendered) {
                 renderAssistantMarkdown(assistantMessage, fullResponse, END_TAG, false, true);
                 imageArtifactRendered = true;
