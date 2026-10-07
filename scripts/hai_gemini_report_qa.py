@@ -687,18 +687,20 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase329_chat_loading_declutter",
-        "Chat Loading Declutter Phase 329" in readme
-        and "20261007-phase329" in readme
+        "readme_phase330_header_connection_cleanup",
+        "Header Connection Cleanup Phase 330" in readme
+        and "20261007-phase330" in readme
+        and "`hai-connection-pill` kanan atas dihapus" in readme
         and "placeholder `.assistant-message`" in readme
         and "livebar kecil di timeline chat" in readme
         and "Backend Library/RAG" in readme
         and "card Library" in readme,
     )
     add(
-        "report_phase329_chat_loading_declutter",
-        "Phase 329" in report
-        and "20261007-phase329" in report
+        "report_phase330_header_connection_cleanup",
+        "Phase 330" in report
+        and "20261007-phase330" in report
+        and "hai-connection-pill" in report
         and ".assistant-message" in report
         and "export-buttons" in report
         and "Backend Library/RAG" in report

@@ -3058,6 +3058,7 @@ STREAMING_STATES_FLOW_JS = """
       submitIsQueue: Boolean(submit.classList.contains('is-queue')),
       statusText: status?.textContent?.trim() || '',
       statusIsImage: Boolean(status?.classList.contains('is-image')),
+      connectionPillHidden: !connectionPill,
       connectionState: connectionPill?.dataset?.state || '',
       connectionText: connectionPill?.textContent?.trim() || '',
       streamBadge,
@@ -3117,8 +3118,7 @@ STREAMING_STATES_FLOW_JS = """
     textState.isThinking &&
     !textState.hasImageCard &&
     textState.submitIsStop &&
-    textState.connectionState === 'live' &&
-    /Realtime/i.test(textState.connectionText) &&
+    textState.connectionPillHidden &&
     textState.ariaBusy === 'true' &&
     !textState.horizontalOverflow &&
     imageState.ok &&
@@ -3142,8 +3142,7 @@ STREAMING_STATES_FLOW_JS = """
     !imageState.hasTyping &&
     imageState.submitIsStop &&
     imageState.statusIsImage &&
-    imageState.connectionState === 'live' &&
-    /Realtime/i.test(imageState.connectionText) &&
+    imageState.connectionPillHidden &&
     imageState.ariaBusy === 'true' &&
     !imageState.horizontalOverflow
   );
@@ -3386,14 +3385,14 @@ REALTIME_RESUME_FLOW_JS = """
     assistantText.includes('Jawaban berhasil dipulihkan dari realtime replay') &&
     !assistantText.includes('koneksi ke Harmonika AI terputus') &&
     !bodyText.includes('QA simulated stream disconnect') &&
-    connectionState === 'replay' &&
-    /Dipulihkan/i.test(connectionText) &&
+    !connectionPill &&
     ariaBusy === 'false'
   );
   return {
     ok,
     replayCalled,
     assistantText,
+    connectionPillHidden: !connectionPill,
     connectionState,
     connectionText,
     ariaBusy,
