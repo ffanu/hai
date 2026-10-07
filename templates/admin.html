@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Harmonika AI · Admin Overview</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#343a40">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=20261007-phase321">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+</head>
+<body class="hai-theme-adminlte-classic hai-admin-page">
+    <main class="hai-admin-shell" aria-labelledby="hai-admin-title">
+        <header class="hai-admin-hero">
+            <a href="/" class="hai-admin-brand" aria-label="Kembali ke Harmonika AI">
+                <img src="/static/images/hai-logo.png" alt="">
+                <span>
+                    <strong>Harmonika AI</strong>
+                    <small>Admin Overview</small>
+                </span>
+            </a>
+            <div class="hai-admin-hero-copy">
+                <p class="hai-admin-kicker">Production observability</p>
+                <h1 id="hai-admin-title">Ringkasan aman tanpa isi chat</h1>
+                <p>Dashboard aggregate-only ini hanya membaca metrik agregat dari server: jumlah chat, dokumen, event realtime, rate limit, dan ukuran storage. Tidak ada isi percakapan, teks dokumen, device ID, token, atau secret yang ditampilkan.</p>
+            </div>
+            <div class="hai-admin-hero-actions">
+                <a href="/" class="hai-admin-button"><i class="fa fa-comments-o" aria-hidden="true"></i> Buka Chat</a>
+                <button type="button" id="hai-admin-refresh" class="hai-admin-button is-primary"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+            </div>
+        </header>
+
+        <section class="hai-admin-status" aria-live="polite">
+            <span id="hai-admin-state-dot" class="hai-admin-state-dot" aria-hidden="true"></span>
+            <span id="hai-admin-state">Memuat overview production…</span>
+        </section>
+
+        <section class="hai-admin-grid" aria-label="Metrik utama">
+            <article class="hai-admin-card">
+                <span class="hai-admin-card-icon"><i class="fa fa-comments-o" aria-hidden="true"></i></span>
+                <small>History</small>
+                <strong id="hai-admin-chats">—</strong>
+                <p id="hai-admin-history-detail">Chat dan pesan tersimpan aggregate.</p>
+            </article>
+            <article class="hai-admin-card">
+                <span class="hai-admin-card-icon"><i class="fa fa-book" aria-hidden="true"></i></span>
+                <small>Library</small>
+                <strong id="hai-admin-documents">—</strong>
+                <p id="hai-admin-library-detail">Dokumen dan chunk index aggregate.</p>
+            </article>
+            <article class="hai-admin-card">
+                <span class="hai-admin-card-icon"><i class="fa fa-bolt" aria-hidden="true"></i></span>
+                <small>Realtime</small>
+                <strong id="hai-admin-realtime">—</strong>
+                <p id="hai-admin-realtime-detail">Replay events dan status WSS.</p>
+            </article>
+            <article class="hai-admin-card">
+                <span class="hai-admin-card-icon"><i class="fa fa-shield" aria-hidden="true"></i></span>
+                <small>Rate limit</small>
+                <strong id="hai-admin-ratelimit">—</strong>
+                <p id="hai-admin-ratelimit-detail">Bucket aktif dan mode storage.</p>
+            </article>
+            <article class="hai-admin-card">
+                <span class="hai-admin-card-icon"><i class="fa fa-line-chart" aria-hidden="true"></i></span>
+                <small>Usage</small>
+                <strong id="hai-admin-usage">—</strong>
+                <p id="hai-admin-usage-detail">Chat aktif dan pesan aggregate.</p>
+            </article>
+        </section>
+
+        <section class="hai-admin-panel-grid">
+            <article class="hai-admin-panel">
+                <h2>Privacy guard</h2>
+                <ul id="hai-admin-privacy" class="hai-admin-checklist">
+                    <li>Menunggu data…</li>
+                </ul>
+            </article>
+            <article class="hai-admin-panel">
+                <h2>Storage</h2>
+                <dl id="hai-admin-storage" class="hai-admin-dl">
+                    <div><dt>History file</dt><dd>—</dd></div>
+                    <div><dt>Library file</dt><dd>—</dd></div>
+                    <div><dt>Rate limit file</dt><dd>—</dd></div>
+                    <div><dt>Realtime event files</dt><dd>—</dd></div>
+                </dl>
+            </article>
+            <article class="hai-admin-panel">
+                <h2>Analytics aggregate</h2>
+                <dl id="hai-admin-analytics" class="hai-admin-dl">
+                    <div><dt>Chat aktif 24 jam</dt><dd>—</dd></div>
+                    <div><dt>Pesan pengguna</dt><dd>—</dd></div>
+                    <div><dt>Pesan AI</dt><dd>—</dd></div>
+                    <div><dt>Artifact gambar</dt><dd>—</dd></div>
+                </dl>
+            </article>
+        </section>
+
+        <footer class="hai-admin-footer">
+            <span>Endpoint: <code>/api/admin/overview</code></span>
+            <span id="hai-admin-updated">Belum dimuat</span>
+        </footer>
+    </main>
+    <script src="{{ url_for('static', filename='js/admin-overview.js') }}?v=20261007-phase321"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+    <title>Harmonika AI</title>
+    <meta name="description" content="Harmonika AI adalah web chat AI untuk tanya jawab, ide, coding, dokumen, pencarian web, dan visual dalam tampilan chat modern.">
+    <meta name="theme-color" content="#343a40">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://hai.harmonika.id/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Harmonika AI">
+    <meta property="og:title" content="Harmonika AI">
+    <meta property="og:description" content="Chat AI umum untuk tanya jawab, ide, coding, dokumen, pencarian web, dan visual.">
+    <meta property="og:url" content="https://hai.harmonika.id/">
+    <meta property="og:image" content="https://hai.harmonika.id/static/images/hai-logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Harmonika AI">
+    <meta name="twitter:description" content="Chat AI umum untuk tanya jawab, ide, coding, dokumen, pencarian web, dan visual.">
+    <meta name="twitter:image" content="https://hai.harmonika.id/static/images/hai-logo.png">
+    <meta name="hai-pdf-worker-src" content="{{ url_for('static', filename='js/pdf.worker.min.js') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=20261007-phase321">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/atom-one-dark.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/katex.min.css') }}">
+    <script src="{{ url_for('static', filename='js/highlight.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/marked.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dexie.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mammoth.browser.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/react.production.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/react-dom.production.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/katex.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/copy-tex.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mhchem.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/render-a11y-string.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auto-render.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.umd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pdf.min.js') }}"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+</head>
+<body class="hai-theme-chatgpt-pattern hai-theme-adminlte-classic">
+    <div class="hai-sr-live" aria-live="polite" aria-atomic="true">Harmonika AI siap digunakan.</div>
+    <div class="container">
+        <div class="left-side">
+            <div id="top-part">
+                <div class="hai-brand">
+                    <img src="/static/images/hai-logo.png" alt="HAI">
+                    <span><b>Harmonika AI</b><small>Chat umum</small></span>
+                </div>
+                <div class="hai-side-actions">
+                    <button type="button" id="close-sidebar" aria-label="Tutup sidebar"><img src="/static/images/icons/sidebar.svg?v=20261007-phase321" alt="" class="icon-svg"></button>
+                    <button type="button" id="new-chat" aria-label="Chat baru"><img src="/static/images/icons/chat.svg?v=20261007-phase321" alt="" class="icon-svg"></button>
+                </div>
+            </div>
+            <div id="middle-part">
+                <button type="button" id="private-chat" hidden><i class="fa fa-user-circle-o" aria-hidden="true"></i>Private Chat</button>
+                <button type="button" id="deep-query" hidden><i class="fa fa-qrcode" aria-hidden="true"></i>Deep Query</button>
+                <div class="hai-history-search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="search" id="history-search" placeholder="Cari riwayat chat" aria-label="Cari riwayat chat" autocomplete="off">
+                </div>
+                <section id="hai-library-panel" class="hai-library-panel" aria-label="Library dokumen Harmonika AI">
+                    <div class="hai-library-head">
+                        <div>
+                            <strong>Library</strong>
+                            <small>Dokumen per device</small>
+                        </div>
+                        <span id="hai-library-count" class="hai-library-count">0</span>
+                    </div>
+                    <div class="hai-library-grounding">
+                        <span>Dipakai ke chat</span>
+                        <button type="button" id="hai-library-grounding-toggle" aria-pressed="true">Otomatis</button>
+                    </div>
+                    <div class="hai-library-context">
+                        <span>Konteks</span>
+                        <button type="button" id="hai-library-context-toggle" aria-pressed="false">Cuplikan</button>
+                    </div>
+                    <div class="hai-library-actions">
+                        <input type="search" id="hai-library-search" placeholder="Cari library" aria-label="Cari dokumen library" autocomplete="off">
+                        <button type="button" id="hai-library-upload" aria-label="Upload dokumen ke library">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div id="hai-library-list" class="hai-library-list" aria-live="polite">
+                        <div class="hai-library-empty">Library belum berisi dokumen.</div>
+                    </div>
+                </section>
+                <div id="chat-history">
+                </div>
+            </div>
+            <div id="bottom-part">
+                <div class="export-buttons">
+                    <button type="button" class="export-button" id="export-markdown">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i><span>Ekspor Markdown</span>
+                    </button>
+                    <button type="button" class="export-button" id="export-json">
+                        <i class="fa fa-file-code-o" aria-hidden="true"></i><span>Ekspor JSON</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="top-panel">
+                <div class="hai-top-title">
+                    <b id="hai-top-heading">Harmonika AI</b>
+                    <span id="hai-top-subtitle">Asisten pintar untuk ide, belajar, kerja, coding, dan gambar.</span>
+                </div>
+                <div id="hai-connection-pill" class="hai-connection-pill" data-state="ready" role="status" aria-live="polite">
+                    <span class="hai-connection-icon" aria-hidden="true">
+                        <img class="hai-connection-icon-ready" src="/static/images/icons/robot-typing.svg?v=20261007-phase321" alt="">
+                        <img class="hai-connection-icon-image" src="/static/images/icons/image-rendering.svg?v=20261007-phase321" alt="">
+                    </span>
+                    <span class="hai-connection-dot" aria-hidden="true"></span>
+                    <span class="hai-connection-label">Siap</span>
+                </div>
+                <div class="hai-top-actions" aria-label="Aksi chat aktif">
+                    <button type="button" id="rename-chat" title="Ubah judul chat"><i class="fa fa-pencil" aria-hidden="true"></i><span>Ubah nama</span></button>
+                    <button type="button" id="copy-chat-link" title="Salin link chat"><i class="fa fa-link" aria-hidden="true"></i><span>Salin link</span></button>
+                </div>
+                <div class="custom-select" hidden>
+                    <div class="select-selected" role="button" tabindex="0" aria-label="Pilih model Harmonika AI" aria-expanded="false">Harmonika AI<i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                    <div class="select-items" id="select-items">
+                        <input type="text" id="model-search" class="model-search" placeholder="Cari model">
+                    </div>
+                </div>
+                <button type="button" id="additional-setting" aria-label="Pengaturan tambahan" hidden><i class="fa fa-sliders fa-inverse" aria-hidden="true"></i></button>
+                <button type="button" id="user-setting" aria-label="Pengaturan API" hidden><i class="fa fa-cog fa-inverse" aria-hidden="true"></i></button>
+            </div>
+            <div class="middle-panel">
+                <div class="chat-wrapper">
+                    <div id="scroller">
+                        <div class="message-container" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions text" aria-busy="false">
+                            <div class="hai-empty-state">
+                                <img src="/static/images/hai-logo.png" alt="">
+                                <h1>Selamat datang di Harmonika AI</h1>
+                                <p>Tempat bertanya, menulis, mencari ide, membaca dokumen, dan membuat visual.</p>
+                                <div class="hai-capabilities" aria-label="Kemampuan Harmonika AI">
+                                    <span><i class="fa fa-comments-o" aria-hidden="true"></i> Chat umum</span>
+                                    <span><i class="fa fa-globe" aria-hidden="true"></i> Web</span>
+                                    <span><i class="fa fa-paperclip" aria-hidden="true"></i> File</span>
+                                    <span><i class="fa fa-picture-o" aria-hidden="true"></i> Gambar</span>
+                                </div>
+                                <div class="hai-suggestions">
+                                    <button type="button" data-hai-prompt="Jelaskan dengan bahasa sederhana: ">
+                                        <strong>Jelaskan sesuatu</strong>
+                                    </button>
+                                    <button type="button" data-hai-prompt="Buatkan ide dan rencana untuk: ">
+                                        <strong>Buat ide</strong>
+                                    </button>
+                                    <button type="button" data-hai-prompt="Bantu debug kode berikut dan jelaskan solusinya: ">
+                                        <strong>Bantu coding</strong>
+                                    </button>
+                                    <button type="button" data-hai-intent="image" data-hai-prompt="Buatkan gambar dengan deskripsi: ">
+                                        <strong>Buat gambar</strong>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="anchor"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-panel">
+                <div id="hai-status" class="hai-status" aria-live="polite"></div>
+                <div class="hai-quick-row" aria-label="Contoh prompt cepat">
+                    <button type="button" data-hai-prompt="Jelaskan dengan bahasa sederhana: ">Jelaskan</button>
+                    <button type="button" data-hai-prompt="Beri ide terbaik untuk: ">Ide</button>
+                    <button type="button" data-hai-prompt="Ringkas teks berikut menjadi poin penting: ">Ringkas</button>
+                    <button type="button" data-hai-prompt="Bantu debug kode berikut: ">Coding</button>
+                    <button type="button" data-hai-intent="image" data-hai-prompt="Buatkan gambar: ">Buat gambar</button>
+                </div>
+                <div id="hai-attachment-tray" class="hai-attachment-tray" aria-live="polite"></div>
+                <form action="" aria-label="Composer Harmonika AI">
+                    <button type="button" id="upload-files" aria-label="Lampirkan file"><i class="fa fa-paperclip fa-inverse" aria-hidden="true"></i></button>
+                    <textarea name="user-input" id="user-input" placeholder="Tanya Harmonika AI…" rows="1" aria-label="Tulis pesan untuk Harmonika AI" enterkeyhint="send" autocomplete="off" autocapitalize="sentences" spellcheck="true"></textarea>
+                    <button type="submit" id="submit-button" aria-label="Kirim pesan"><i class="fa fa-arrow-circle-up fa-inverse" aria-hidden="true"></i></button>
+                </form>
+                <div id="hai-queue-status" class="hai-queue-status" aria-live="polite"></div>
+                <div class="hai-composer-hint">Tekan Enter untuk kirim · Shift+Enter untuk baris baru</div>
+            </div>
+            <aside id="hai-artifact-panel" class="hai-artifact-panel" aria-hidden="true" aria-label="Kanvas artefak">
+                <div class="hai-artifact-panel-header">
+                    <div>
+                        <span class="hai-artifact-kicker">Kanvas</span>
+                        <strong id="hai-artifact-title">Artefak</strong>
+                    </div>
+                    <div class="hai-artifact-actions">
+                        <button type="button" id="hai-artifact-copy" title="Salin artefak"><i class="fa fa-copy" aria-hidden="true"></i><span>Salin</span></button>
+                        <a id="hai-artifact-download" href="#" download hidden><i class="fa fa-download" aria-hidden="true"></i><span>Unduh</span></a>
+                        <button type="button" id="hai-artifact-close" title="Tutup kanvas"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div id="hai-artifact-body" class="hai-artifact-panel-body"></div>
+            </aside>
+            <div id="hai-artifact-backdrop" class="hai-artifact-backdrop" hidden></div>
+        </div>
+        <div id="settings-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="settings-popup-title" aria-hidden="true">
+            <div class="popup-content">
+                <button type="button" class="close-btn" id="settings-close" aria-label="Tutup pengaturan">&times;</button>
+                <h2 id="settings-popup-title"><i class="fa fa-cog" aria-hidden="true"></i> Pengaturan</h2>
+                <form>
+                    <div class="input-group">
+                        <label for="base-url">
+                            <i class="fa fa-link" aria-hidden="true"></i> URL Dasar
+                        </label>
+                        <input type="text" id="base-url" name="base-url" placeholder="Contoh: https://openrouter.ai/api/v1">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="api-key">
+                            <i class="fa fa-key" aria-hidden="true"></i> Kunci API
+                        </label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="api-key" name="api-key" placeholder="Masukkan kunci API">
+                            <button type="button" class="toggle-password" aria-label="Tampilkan atau sembunyikan API key">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="settings-save">
+                        <i class="fa fa-save" aria-hidden="true"></i> Simpan pengaturan
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div id="additional-settings-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="additional-settings-popup-title" aria-hidden="true">
+            <div class="popup-content">
+                <button type="button" class="close-btn" id="additional-settings-close" aria-label="Tutup pengaturan tambahan">&times;</button>
+                <h2 id="additional-settings-popup-title"><i class="fa fa-sliders" aria-hidden="true"></i> Pengaturan tambahan</h2>
+                <form>
+                    <div class="input-group">
+                        <label for="system-content">
+                            <i class="fa fa-commenting" aria-hidden="true"></i> Prompt sistem
+                        </label>
+                        <textarea 
+                            id="system-content" 
+                            name="system-content" 
+                            placeholder="Masukkan instruksi sistem untuk perilaku AI"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fa fa-cogs" aria-hidden="true"></i> Parameter model
+                        </label>
+                        <div class="parameter-buttons">
+                            <button type="button" class="parameter-button" data-mode="precise">Presisi</button>
+                            <button type="button" class="parameter-button" data-mode="balanced">Seimbang</button>
+                            <button type="button" class="parameter-button" data-mode="creative">Kreatif</button>
+                            <button type="button" class="parameter-button" data-mode="custom">Kustom</button>
+                        </div>
+                        <textarea 
+                            id="model-parameters" 
+                            name="model-parameters" 
+                            placeholder="Example: temperature=0.7, top_p=0.95"
+                            rows="3"
+                            style="display: none;"
+                        ></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fa fa-tags" aria-hidden="true"></i> Tag penalaran
+                        </label>
+                        <div class="tag-inputs">
+                            <div class="tag-input">
+                                <label for="start-tag">Tag mulai</label>
+                                <input 
+                                    type="text" 
+                                    id="start-tag" 
+                                    name="start-tag" 
+                                    placeholder="Contoh: <think>"
+                                >
+                            </div>
+                            <div class="tag-input">
+                                <label for="end-tag">Tag akhir</label>
+                                <input 
+                                    type="text" 
+                                    id="end-tag" 
+                                    name="end-tag" 
+                                    placeholder="Contoh: </think>"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="additional-settings-save">
+                        <i class="fa fa-save" aria-hidden="true"></i> Simpan pengaturan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}?v=20261007-phase321"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Python / runtime
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local runtime data and generated files
+tmp/
+*.log
+.DS_Store
+
+# QA artifacts can be regenerated and are large/noisy
+qa-reports/
+qa-screenshots/
+playwright-report/
+test-results/
+
+# Node/browser caches if tooling creates them
+node_modules/
+.cache/
+
+# Local backup from upstream import; do not publish as active repo history
+.git.upstream-backup/
+
+# Accidental ANSI-named empty file from terminal output
+[0m[38
