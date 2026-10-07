@@ -60,7 +60,7 @@ def main() -> int:
             'id="hai-library-context-toggle"',
             'id="hai-library-list"',
         ])
-        and '?v=20261007-phase328' in template,
+        and '?v=20261007-phase329' in template,
     )
     add(
         checks,
@@ -81,7 +81,7 @@ def main() -> int:
             "grounding moved server-side",
             "await loadLibraryDocuments()",
             "?v=${HAI_ICON_VERSION}",
-            "20261007-phase328",
+            "20261007-phase329",
         ]),
     )
     add(

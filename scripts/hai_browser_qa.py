@@ -3102,14 +3102,9 @@ STREAMING_STATES_FLOW_JS = """
     textState.intent === 'text' &&
     textState.isStreaming &&
     !textState.isImageStreaming &&
-    textState.hasTyping &&
-    textState.hasRobot &&
-    textState.hasRobotFace &&
-    textState.hasRobotImg &&
-    /robot-typing\.svg/i.test(textState.robotImgSrc || '') &&
-    textState.typingDotCount === 3 &&
-    /menyiapkan|sedang disiapkan|diketik/i.test(textState.typingText) &&
-    !textState.assistantMessageEmpty &&
+    !textState.hasTyping &&
+    !textState.hasRobot &&
+    textState.assistantMessageEmpty &&
     textState.hasLivebar &&
     textState.livebarTone === 'text' &&
     /menyiapkan jawaban|sedang berpikir|sedang mengetik|diketik realtime/i.test(textState.livebarText) &&
