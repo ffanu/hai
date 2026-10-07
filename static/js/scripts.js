@@ -32,7 +32,7 @@ const HAI_MAX_ATTACHMENTS = 3;
 const HAI_SUPPORTED_DOCUMENT_EXTENSIONS = ['.pdf', '.txt', '.csv', '.docx', '.xlsx'];
 const HAI_SUPPORTED_IMAGE_MIME = ['image/png', 'image/jpeg', 'image/webp'];
 const HAI_LIBRARY_GROUNDING_LIMIT = 3;
-const HAI_ICON_VERSION = '20261007-phase327';
+const HAI_ICON_VERSION = '20261007-phase328';
 const HAI_STREAM_STALL_FINALIZE_MS = 24000;
 const HAI_LIBRARY_GROUNDING_STORAGE_KEY = 'hai_library_grounding_mode';
 const HAI_LIBRARY_CONTEXT_STORAGE_KEY = 'hai_library_context_mode';
@@ -6723,9 +6723,9 @@ function exportJSON() {
     document.body.removeChild(a);
 }
 
-// Export button event listeners
-document.getElementById('export-markdown').addEventListener('click', exportMarkdown);
-document.getElementById('export-json').addEventListener('click', exportJSON);
+// Export helpers are kept for QA/internal calls, while public sidebar buttons can be hidden.
+document.getElementById('export-markdown')?.addEventListener('click', exportMarkdown);
+document.getElementById('export-json')?.addEventListener('click', exportJSON);
 
 // Functions for file parsing
 async function parsePDF(file) {

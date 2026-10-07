@@ -687,18 +687,19 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase327_sidebar_library_cleanup",
-        "Sidebar Library Card Cleanup Phase 327" in readme
-        and "20261007-phase327" in readme
-        and "card Library di sidebar disembunyikan" in readme
+        "readme_phase328_sidebar_cleanup",
+        "Sidebar Cleanup Phase 328" in readme
+        and "20261007-phase328" in readme
+        and "card Library dan tombol export Markdown/JSON" in readme
         and "Backend Library/RAG" in readme
         and "mengetik realtime" in readme,
     )
     add(
-        "report_phase327_sidebar_library_cleanup",
-        "Phase 327" in report
-        and "20261007-phase327" in report
+        "report_phase328_sidebar_cleanup",
+        "Phase 328" in report
+        and "20261007-phase328" in report
         and "card Library" in report
+        and "export-buttons" in report
         and "Backend Library/RAG" in report
         and "timeline chat" in report
         and "bubble assistant" in report,

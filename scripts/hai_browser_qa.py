@@ -402,6 +402,7 @@ BASELINE_METRICS_JS = """
     (topActionsStyle.display === 'none' || topActionsStyle.visibility === 'hidden' || Number(topActionsStyle.opacity) === 0)
   );
   const exportLabels = [...document.querySelectorAll('.export-button span')].map((node) => node.textContent.trim());
+  const exportButtonsHidden = exportLabels.length === 0;
   const quickRowStyle = document.querySelector('.hai-quick-row') ? getComputedStyle(document.querySelector('.hai-quick-row')) : null;
   const quickRowHiddenOnEmpty = Boolean(
     document.body.classList.contains('hai-chat-empty') &&
@@ -483,8 +484,7 @@ BASELINE_METRICS_JS = """
   const localizedChromeOk = Boolean(
     topActionLabels.includes('Ubah nama') &&
     topActionLabels.includes('Salin link') &&
-    exportLabels.includes('Ekspor Markdown') &&
-    exportLabels.includes('Ekspor JSON') &&
+    exportButtonsHidden &&
     /^Tekan Enter untuk kirim/.test(composerHint) &&
     settingsLocalizedOk &&
     artifactLocalizedOk &&
@@ -532,6 +532,7 @@ BASELINE_METRICS_JS = """
     chromeIcons,
     chromeIconsPaint,
     exportLabels,
+    exportButtonsHidden,
     composerHint,
     settingsText,
     settingsPlaceholders,

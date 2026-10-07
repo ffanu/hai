@@ -102,7 +102,7 @@ def main() -> int:
             and "/api/admin/overview" in admin_html
             and "aggregate-only" in admin_html
             and "Analytics aggregate" in admin_html
-            and "admin-overview.js?v=20261007-phase327" in admin_html
+            and "admin-overview.js?v=20261007-phase328" in admin_html
             and "<script>" not in admin_html
             and " onclick=" not in admin_html.lower(),
             status=admin_response.status_code,
