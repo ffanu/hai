@@ -687,20 +687,21 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase322_empty_stream_fallback",
-        "Calm Streaming Loader Phase 322" in readme
-        and "20261007-phase322" in readme
-        and "livebar kecil" in readme
+        "readme_phase323_empty_stream_fallback",
+        "Robot Typing Visual Fix Phase 323" in readme
+        and "20261007-phase323" in readme
+        and "ghost" in readme
         and "skeleton halus" in readme
         and "dikuras bertahap" in readme
-        and "streaming-states" in readme,
+        and "dots mobile" in readme,
     )
     add(
-        "report_phase322_empty_stream_fallback",
-        "Phase 322" in report
-        and "20261007-phase322" in report
+        "report_phase323_empty_stream_fallback",
+        "Phase 323" in report
+        and "20261007-phase323" in report
         and "empty-stream-fallback" in report
-        and "finalisasi stream" in report
+        and "robot typing" in report
+        and "dots mobile" in report
         and "buffer" in report
         and "bubble assistant" in report,
     )

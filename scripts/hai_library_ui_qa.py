@@ -59,7 +59,7 @@ def main() -> int:
             'id="hai-library-grounding-toggle"',
             'id="hai-library-context-toggle"',
             'id="hai-library-list"',
-            '?v=20261007-phase322',
+            '?v=20261007-phase323',
         ]),
     )
     add(
@@ -81,7 +81,7 @@ def main() -> int:
             "grounding moved server-side",
             "await loadLibraryDocuments()",
             "?v=${HAI_ICON_VERSION}",
-            "20261007-phase322",
+            "20261007-phase323",
         ]),
     )
     add(

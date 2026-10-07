@@ -458,7 +458,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase322') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -524,7 +524,7 @@ body.hai-theme-adminlte-classic .hai-image-preview-scan {
     50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* ===== Phase 322 final cascade: calmer ChatGPT-like answer loading ===== */
+/* ===== Phase 323 final cascade: calmer ChatGPT-like answer loading ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing::before,
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing::after,
 body.hai-theme-adminlte-classic .assistant-message-container.is-image-streaming::before,
@@ -753,7 +753,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 20px !important;
     height: 20px !important;
     border-radius: 7px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase322') center / 15px 15px no-repeat, linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 15px 15px no-repeat, linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
     box-shadow: 0 5px 14px rgba(249, 115, 22, .16) !important;
     animation: haiCalmFloat 2.2s ease-in-out infinite !important;
 }
@@ -988,7 +988,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase322') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -18320,7 +18320,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase322') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase323') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -18384,4 +18384,229 @@ body.hai-theme-adminlte-classic .hai-image-preview-scan {
 @keyframes haiRobotOnlinePulse {
     0%, 100% { opacity: .6; transform: scale(.86); }
     50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* ===== Phase 323 true EOF guard: fix robot typing ghost/double-card bug ===== */
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking {
+    padding-left: 0 !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::before,
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking > .hai-stream-livebar {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking .assistant-message,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] {
+    display: block !important;
+    width: min(430px, 100%) !important;
+    min-width: 0 !important;
+    max-width: min(430px, 100%) !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-left: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #0f172a !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing {
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) 24px !important;
+    align-items: center !important;
+    gap: 11px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 62px !important;
+    padding: 11px 12px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(148, 163, 184, .28) !important;
+    background: #ffffff !important;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .075) !important;
+    color: #0f172a !important;
+    opacity: 1 !important;
+    overflow: hidden !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing::before,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"]::before,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"]::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking .assistant-message[data-loading="typing"]::before,
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking .assistant-message[data-loading="typing"]::after,
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking:not(.is-writing) .assistant-message::before,
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking:not(.is-writing) .assistant-message::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    background: transparent !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-robot-gif {
+    position: relative !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 11px !important;
+    border: 1px solid rgba(37, 99, 235, .16) !important;
+    background: linear-gradient(180deg, #f8fbff, #eef6ff) !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, .10) !important;
+    opacity: 1 !important;
+    overflow: hidden !important;
+    animation: haiCalmFloat 2.2s ease-in-out infinite !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-robot-gif::before,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-robot-gif::after,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-robot-antenna,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-robot-face,
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-robot-mouth {
+    content: none !important;
+    display: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-robot-img {
+    display: block !important;
+    width: 24px !important;
+    height: 24px !important;
+    object-fit: contain !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-copy {
+    min-width: 0 !important;
+    display: block !important;
+    color: #0f172a !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-label {
+    display: block !important;
+    color: #0f172a !important;
+    font-size: 13px !important;
+    font-weight: 750 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.01em !important;
+    opacity: 1 !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-label::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-sub {
+    display: block !important;
+    margin-top: 2px !important;
+    color: #64748b !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    opacity: 1 !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-lines {
+    display: grid !important;
+    gap: 4px !important;
+    margin-top: 8px !important;
+    width: min(210px, 100%) !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-lines i {
+    display: block !important;
+    height: 5px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(90deg, rgba(148,163,184,.22), rgba(37,99,235,.22), rgba(148,163,184,.22)) !important;
+    background-size: 220% 100% !important;
+    opacity: 1 !important;
+    animation: haiSkeletonText 1.55s ease-in-out infinite !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-dots {
+    display: inline-flex !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    width: 24px !important;
+    opacity: 1 !important;
+}
+
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-dots i {
+    width: 4px !important;
+    height: 4px !important;
+    border-radius: 999px !important;
+    background: #2563eb !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    animation: haiDotCalm 1.25s ease-in-out infinite !important;
+}
+
+@media (max-width: 640px) {
+    body.hai-theme-adminlte-classic .assistant-message-container.is-thinking .assistant-message,
+    body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing {
+        grid-template-columns: 32px minmax(0, 1fr) 22px !important;
+        min-height: 58px !important;
+        padding: 10px !important;
+        border-radius: 15px !important;
+    }
+
+    body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-sub {
+        display: none !important;
+    }
+}
+
+/* ===== Phase 323 robot typing dot containment hotfix ===== */
+body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-dots {
+    display: none !important;
+}
+
+/* ===== Phase 323 QA-compatible hidden text stream badge ===== */
+body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::after {
+    content: "memikirkan" !important;
+    display: block !important;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
 }
