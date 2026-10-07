@@ -32,7 +32,7 @@ const HAI_MAX_ATTACHMENTS = 3;
 const HAI_SUPPORTED_DOCUMENT_EXTENSIONS = ['.pdf', '.txt', '.csv', '.docx', '.xlsx'];
 const HAI_SUPPORTED_IMAGE_MIME = ['image/png', 'image/jpeg', 'image/webp'];
 const HAI_LIBRARY_GROUNDING_LIMIT = 3;
-const HAI_ICON_VERSION = '20261007-phase324';
+const HAI_ICON_VERSION = '20261007-phase325';
 const HAI_STREAM_STALL_FINALIZE_MS = 24000;
 const HAI_LIBRARY_GROUNDING_STORAGE_KEY = 'hai_library_grounding_mode';
 const HAI_LIBRARY_CONTEXT_STORAGE_KEY = 'hai_library_context_mode';
@@ -390,12 +390,12 @@ function setHaiConnectionState(state = 'ready', label = '') {
 }
 
 const HAI_LIVE_STATUS = {
-    connecting: ['Menyiapkan stream jawaban realtime…', 'info'],
-    textThinking: ['Harmonika AI sedang berpikir…', 'info'],
-    textWriting: ['Harmonika AI sedang mengetik jawaban…', 'info'],
-    webReading: ['Mencari dan membaca referensi web…', 'info'],
-    webWriting: ['Harmonika AI sedang menulis dengan referensi web…', 'info'],
-    codeWriting: ['Harmonika AI sedang menulis kode…', 'info'],
+    connecting: ['Menyiapkan jawaban realtime…', 'info'],
+    textThinking: ['Menyusun rencana jawaban…', 'info'],
+    textWriting: ['Mengetik jawaban realtime…', 'info'],
+    webReading: ['Mencari referensi terbaik…', 'info'],
+    webWriting: ['Merangkum referensi dan mengetik…', 'info'],
+    codeWriting: ['Menganalisis kode dan mengetik…', 'info'],
     imagePreparing: ['Menyiapkan kanvas gambar…', 'image'],
     imageDesigning: ['Harmonika AI sedang mendesain gambar…', 'image'],
     imageRendering: ['Harmonika AI sedang merender gambar…', 'image'],
@@ -411,6 +411,9 @@ function setHaiLiveStatus(state, fallbackType = 'info') {
         setHaiConnectionState('live');
     } else if (state === 'stopped') {
         setHaiConnectionState('stopped');
+    }
+    if (haiStatus) {
+        haiStatus.dataset.liveState = String(state || '');
     }
     const value = HAI_LIVE_STATUS[state];
     if (!value) {

@@ -458,7 +458,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase325') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -524,7 +524,7 @@ body.hai-theme-adminlte-classic .hai-image-preview-scan {
     50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* ===== Phase 324 final cascade: calmer ChatGPT-like answer loading ===== */
+/* ===== Phase 325 final cascade: calmer ChatGPT-like answer loading ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing::before,
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing::after,
 body.hai-theme-adminlte-classic .assistant-message-container.is-image-streaming::before,
@@ -753,7 +753,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 20px !important;
     height: 20px !important;
     border-radius: 7px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 15px 15px no-repeat, linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase325') center / 15px 15px no-repeat, linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
     box-shadow: 0 5px 14px rgba(249, 115, 22, .16) !important;
     animation: haiCalmFloat 2.2s ease-in-out infinite !important;
 }
@@ -988,7 +988,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase325') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -18320,7 +18320,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-rendering .hai-i
     width: 24px !important;
     height: 24px !important;
     border-radius: 9px !important;
-    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase324') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
+    background: url('/static/images/icons/image-rendering.svg?v=20261007-phase325') center / 18px 18px no-repeat, linear-gradient(135deg, #fed7aa, #cffafe) !important;
     box-shadow: 0 8px 18px rgba(249, 115, 22, .20) !important;
     animation: haiRobotGifFloat 1.18s ease-in-out infinite !important;
 }
@@ -18386,7 +18386,7 @@ body.hai-theme-adminlte-classic .hai-image-preview-scan {
     50% { opacity: 1; transform: scale(1.08); }
 }
 
-/* ===== Phase 324 true EOF guard: fix robot typing ghost/double-card bug ===== */
+/* ===== Phase 325 true EOF guard: fix robot typing ghost/double-card bug ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-thinking {
     padding-left: 0 !important;
 }
@@ -18591,12 +18591,12 @@ body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-t
     }
 }
 
-/* ===== Phase 324 robot typing dot containment hotfix ===== */
+/* ===== Phase 325 robot typing dot containment hotfix ===== */
 body.hai-theme-adminlte-classic .assistant-message[data-loading="typing"] .hai-typing-dots {
     display: none !important;
 }
 
-/* ===== Phase 324 QA-compatible hidden text stream badge ===== */
+/* ===== Phase 325 QA-compatible hidden text stream badge ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::after {
     content: "memikirkan" !important;
     display: block !important;
@@ -18611,7 +18611,7 @@ body.hai-theme-adminlte-classic .assistant-message-container.is-thinking::after 
     pointer-events: none !important;
 }
 
-/* ===== Phase 324 EOF guard: stable text writing/replay flow ===== */
+/* ===== Phase 325 EOF guard: stable text writing/replay flow ===== */
 body.hai-theme-adminlte-classic .assistant-message-container.is-writing,
 body.hai-theme-adminlte-classic .assistant-message-container.is-code-writing {
     position: relative !important;
@@ -18671,4 +18671,123 @@ body.hai-theme-adminlte-classic .assistant-message[data-loading="writing"]::befo
 body.hai-theme-adminlte-classic .assistant-message[data-loading="writing"]::after {
     content: none !important;
     display: none !important;
+}
+
+/* ===== Phase 325 composer realtime activity animation ===== */
+body.hai-theme-adminlte-classic .hai-status.is-visible,
+body.hai-theme-chatgpt-pattern .hai-status.is-visible {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-height: 30px !important;
+    padding: 7px 14px 7px 36px !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-visible::before,
+body.hai-theme-chatgpt-pattern .hai-status.is-visible::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 10px !important;
+    top: 50% !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    border-radius: 999px !important;
+    background:
+        url('/static/images/icons/robot-typing.svg?v=20261007-phase325') center / 15px 15px no-repeat,
+        linear-gradient(180deg, #eff6ff, #dbeafe) !important;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, .16), 0 0 16px rgba(37, 99, 235, .20) !important;
+    translate: 0 -50% !important;
+    animation: haiStatusRobotPulse 1.35s ease-in-out infinite !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-visible::after,
+body.hai-theme-chatgpt-pattern .hai-status.is-visible::after {
+    content: "" !important;
+    width: 32px !important;
+    height: 8px !important;
+    min-width: 32px !important;
+    margin-left: auto !important;
+    border-radius: 999px !important;
+    background:
+        radial-gradient(circle, #2563eb 0 34%, transparent 38%) 0 50% / 10px 8px repeat-x !important;
+    opacity: .82 !important;
+    animation: haiStatusTypingDots 1s steps(4, end) infinite !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-visible {
+    border-color: rgba(37, 99, 235, .20) !important;
+    background:
+        linear-gradient(110deg, rgba(255,255,255,.92), rgba(219,234,254,.84) 42%, rgba(255,255,255,.92)) !important;
+    color: #0f4f5f !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .08), inset 0 1px 0 rgba(255,255,255,.88) !important;
+}
+
+body.hai-theme-chatgpt-pattern .hai-status.is-visible {
+    border-color: rgba(96, 165, 250, .18) !important;
+    background:
+        linear-gradient(110deg, rgba(15,23,42,.86), rgba(30,41,59,.92) 45%, rgba(15,23,42,.86)) !important;
+    color: rgba(226, 232, 240, .92) !important;
+    box-shadow: 0 14px 32px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-visible[data-live-state="webReading"]::before,
+body.hai-theme-adminlte-classic .hai-status.is-visible[data-live-state="webWriting"]::before,
+body.hai-theme-chatgpt-pattern .hai-status.is-visible[data-live-state="webReading"]::before,
+body.hai-theme-chatgpt-pattern .hai-status.is-visible[data-live-state="webWriting"]::before {
+    background:
+        radial-gradient(circle at 50% 50%, rgba(16,185,129,.92) 0 26%, transparent 29%),
+        radial-gradient(circle at 50% 50%, transparent 0 44%, rgba(16,185,129,.42) 45% 51%, transparent 52%),
+        linear-gradient(180deg, #ecfdf5, #d1fae5) !important;
+    animation: haiStatusSearchPulse 1.18s ease-in-out infinite !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-image::before,
+body.hai-theme-chatgpt-pattern .hai-status.is-image::before {
+    background:
+        url('/static/images/icons/image-rendering.svg?v=20261007-phase325') center / 15px 15px no-repeat,
+        linear-gradient(135deg, #ffedd5, #e0f2fe) !important;
+    box-shadow: 0 0 0 1px rgba(249, 115, 22, .18), 0 0 16px rgba(249, 115, 22, .22) !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-image::after,
+body.hai-theme-chatgpt-pattern .hai-status.is-image::after {
+    background: linear-gradient(90deg, #f97316, #22d3ee, #10b981, #f97316) !important;
+    background-size: 240% 100% !important;
+    height: 4px !important;
+    animation: haiStatusProgress 1.1s linear infinite !important;
+}
+
+body.hai-theme-adminlte-classic .hai-status.is-error::before,
+body.hai-theme-chatgpt-pattern .hai-status.is-error::before,
+body.hai-theme-adminlte-classic .hai-status.is-stopping::before,
+body.hai-theme-chatgpt-pattern .hai-status.is-stopping::before {
+    background: linear-gradient(135deg, #fecaca, #fee2e2) !important;
+}
+
+@keyframes haiStatusRobotPulse {
+    0%, 100% { transform: translateY(0) scale(1); filter: saturate(1); }
+    45% { transform: translateY(-1px) scale(1.08); filter: saturate(1.12); }
+}
+
+@keyframes haiStatusTypingDots {
+    0% { clip-path: inset(0 24px 0 0); opacity: .42; }
+    35% { clip-path: inset(0 14px 0 0); opacity: .72; }
+    70%, 100% { clip-path: inset(0 0 0 0); opacity: .96; }
+}
+
+@keyframes haiStatusSearchPulse {
+    0%, 100% { transform: scale(.96); box-shadow: 0 0 0 0 rgba(16,185,129,.20), 0 0 16px rgba(16,185,129,.20); }
+    50% { transform: scale(1.08); box-shadow: 0 0 0 5px rgba(16,185,129,.08), 0 0 18px rgba(16,185,129,.28); }
+}
+
+@keyframes haiStatusProgress {
+    0% { background-position: 0% 50%; transform: scaleX(.72); opacity: .72; }
+    50% { transform: scaleX(1); opacity: 1; }
+    100% { background-position: 100% 50%; transform: scaleX(.72); opacity: .72; }
 }
