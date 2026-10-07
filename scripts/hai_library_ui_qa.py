@@ -3,7 +3,7 @@
 
 This locks the next-step product behavior without spending model quota:
 
-- Sidebar exposes Library upload/search/list controls.
+- Backend Library/RAG remains available while the public sidebar card can be hidden.
 - Frontend can call `/api/library/*` for sidebar management.
 - Backend `/chat` attaches relevant Library snippets as private per-device
   grounding context and emits URL-less `source:"library"` source metadata.
@@ -51,16 +51,16 @@ def main() -> int:
 
     add(
         checks,
-        "template_library_panel",
-        all(token in template for token in [
+        "template_library_panel_hidden",
+        all(token not in template for token in [
             'id="hai-library-panel"',
             'id="hai-library-search"',
             'id="hai-library-upload"',
             'id="hai-library-grounding-toggle"',
             'id="hai-library-context-toggle"',
             'id="hai-library-list"',
-            '?v=20261007-phase326',
-        ]),
+        ])
+        and '?v=20261007-phase327' in template,
     )
     add(
         checks,
@@ -81,7 +81,7 @@ def main() -> int:
             "grounding moved server-side",
             "await loadLibraryDocuments()",
             "?v=${HAI_ICON_VERSION}",
-            "20261007-phase326",
+            "20261007-phase327",
         ]),
     )
     add(

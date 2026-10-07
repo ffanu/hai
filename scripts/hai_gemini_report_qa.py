@@ -687,25 +687,20 @@ def main() -> int:
         and "72/72 OK" in report,
     )
     add(
-        "readme_phase326_empty_stream_fallback",
-        "Realtime Activity Animation Phase 326" in readme
-        and "20261007-phase326" in readme
-        and "ghost" in readme
-        and "skeleton halus" in readme
-        and "mengetik realtime" in readme
-        and "dikuras bertahap" in readme
-        and "dots mobile" in readme,
+        "readme_phase327_sidebar_library_cleanup",
+        "Sidebar Library Card Cleanup Phase 327" in readme
+        and "20261007-phase327" in readme
+        and "card Library di sidebar disembunyikan" in readme
+        and "Backend Library/RAG" in readme
+        and "mengetik realtime" in readme,
     )
     add(
-        "report_phase326_empty_stream_fallback",
-        "Phase 326" in report
-        and "20261007-phase326" in report
-        and "empty-stream-fallback" in report
-        and "robot typing" in report
-        and "dots mobile" in report
-        and "badge hijau vertikal" in report
-        and "activity animation" in report
-        and "buffer" in report
+        "report_phase327_sidebar_library_cleanup",
+        "Phase 327" in report
+        and "20261007-phase327" in report
+        and "card Library" in report
+        and "Backend Library/RAG" in report
+        and "timeline chat" in report
         and "bubble assistant" in report,
     )
 

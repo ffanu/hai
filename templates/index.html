@@ -19,7 +19,7 @@
     <meta name="twitter:description" content="Chat AI umum untuk tanya jawab, ide, coding, dokumen, pencarian web, dan visual.">
     <meta name="twitter:image" content="https://hai.harmonika.id/static/images/hai-logo.png">
     <meta name="hai-pdf-worker-src" content="{{ url_for('static', filename='js/pdf.worker.min.js') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=20261007-phase326">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?v=20261007-phase327">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/atom-one-dark.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/katex.min.css') }}">
@@ -49,8 +49,8 @@
                     <span><b>Harmonika AI</b><small>Chat umum</small></span>
                 </div>
                 <div class="hai-side-actions">
-                    <button type="button" id="close-sidebar" aria-label="Tutup sidebar"><img src="/static/images/icons/sidebar.svg?v=20261007-phase326" alt="" class="icon-svg"></button>
-                    <button type="button" id="new-chat" aria-label="Chat baru"><img src="/static/images/icons/chat.svg?v=20261007-phase326" alt="" class="icon-svg"></button>
+                    <button type="button" id="close-sidebar" aria-label="Tutup sidebar"><img src="/static/images/icons/sidebar.svg?v=20261007-phase327" alt="" class="icon-svg"></button>
+                    <button type="button" id="new-chat" aria-label="Chat baru"><img src="/static/images/icons/chat.svg?v=20261007-phase327" alt="" class="icon-svg"></button>
                 </div>
             </div>
             <div id="middle-part">
@@ -60,32 +60,6 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input type="search" id="history-search" placeholder="Cari riwayat chat" aria-label="Cari riwayat chat" autocomplete="off">
                 </div>
-                <section id="hai-library-panel" class="hai-library-panel" aria-label="Library dokumen Harmonika AI">
-                    <div class="hai-library-head">
-                        <div>
-                            <strong>Library</strong>
-                            <small>Dokumen per device</small>
-                        </div>
-                        <span id="hai-library-count" class="hai-library-count">0</span>
-                    </div>
-                    <div class="hai-library-grounding">
-                        <span>Dipakai ke chat</span>
-                        <button type="button" id="hai-library-grounding-toggle" aria-pressed="true">Otomatis</button>
-                    </div>
-                    <div class="hai-library-context">
-                        <span>Konteks</span>
-                        <button type="button" id="hai-library-context-toggle" aria-pressed="false">Cuplikan</button>
-                    </div>
-                    <div class="hai-library-actions">
-                        <input type="search" id="hai-library-search" placeholder="Cari library" aria-label="Cari dokumen library" autocomplete="off">
-                        <button type="button" id="hai-library-upload" aria-label="Upload dokumen ke library">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div id="hai-library-list" class="hai-library-list" aria-live="polite">
-                        <div class="hai-library-empty">Library belum berisi dokumen.</div>
-                    </div>
-                </section>
                 <div id="chat-history">
                 </div>
             </div>
@@ -108,8 +82,8 @@
                 </div>
                 <div id="hai-connection-pill" class="hai-connection-pill" data-state="ready" role="status" aria-live="polite">
                     <span class="hai-connection-icon" aria-hidden="true">
-                        <img class="hai-connection-icon-ready" src="/static/images/icons/robot-typing.svg?v=20261007-phase326" alt="">
-                        <img class="hai-connection-icon-image" src="/static/images/icons/image-rendering.svg?v=20261007-phase326" alt="">
+                        <img class="hai-connection-icon-ready" src="/static/images/icons/robot-typing.svg?v=20261007-phase327" alt="">
+                        <img class="hai-connection-icon-image" src="/static/images/icons/image-rendering.svg?v=20261007-phase327" alt="">
                     </span>
                     <span class="hai-connection-dot" aria-hidden="true"></span>
                     <span class="hai-connection-label">Siap</span>
@@ -295,6 +269,6 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/scripts.js') }}?v=20261007-phase326"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}?v=20261007-phase327"></script>
 </body>
 </html>
